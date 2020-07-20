@@ -58,6 +58,10 @@ class BurgerBuilder extends Component {
     this.setState({ readyToPurchase: true });
   };
 
+  cancelPurchaseHandler = () => {
+    this.setState({ readyToPurchase: false });
+  };
+
   render() {
     let disabledInfo = { ...this.state.ingredients };
     for (let key in disabledInfo) {
@@ -65,7 +69,7 @@ class BurgerBuilder extends Component {
     }
     return (
       <Aux>
-        <Modal show={this.state.readyToPurchase}>
+        <Modal show={this.state.readyToPurchase} cancelPurchase={this.cancelPurchaseHandler}>
           <OrderSummary ingredients={this.state.ingredients} />
         </Modal>
         <Burger ingredients={this.state.ingredients} />
