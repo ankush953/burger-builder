@@ -32,10 +32,6 @@ class BurgerBuilder extends Component {
 
   removeIngredientHandler = (type) => {
     const oldCount = this.state.ingredients[type];
-    if (oldCount === 0) {
-      alert(`No ${type} layer is applied.`);
-      return;
-    }
     const updatedCount = oldCount - 1;
     const updatedIngredients = { ...this.state.ingredients };
     updatedIngredients[type] = updatedCount;
@@ -44,12 +40,20 @@ class BurgerBuilder extends Component {
   };
 
   render() {
+    let disabledInfo = { ...this.state.ingredients };
+    for (let key in disabledInfo) {
+      disabledInfo[key] = disabledInfo[key] <= 0;
+    }
     return (
       <Aux>
-        <Burger ingredients={this.state.ingredients} />
+        <Burger
+          ingredients={this.state.ingredients}
+          price={this.state.totalPrice}
+        />
         <BurgerControls
           addIngredient={this.addIngredientHandler}
           removeIngredient={this.removeIngredientHandler}
+          disabledInfo={disabledInfo}
         />
       </Aux>
     );
