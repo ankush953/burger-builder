@@ -3,6 +3,13 @@ import Aux from "../../hoc/Aux";
 import Burger from "../../components/Burger/Burger";
 import BurgerControls from "../../components/Burger/BuildControls/BuildControls";
 
+const INGREDIENT_PRICES = {
+  salad: 0.5,
+  cheese: 0.4,
+  meat: 1.3,
+  bacon: 0.7,
+};
+
 class BurgerBuilder extends Component {
   state = {
     ingredients: {
@@ -11,14 +18,39 @@ class BurgerBuilder extends Component {
       bacon: 0,
       meat: 0,
     },
-    price: 0,
+    totalPrice: 4,
+  };
+
+  addIngredientHandler = (type) => {
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount + 1;
+    const updatedIngredients = { ...this.state.ingredients };
+    updatedIngredients[type] = updatedCount;
+    const newPrice = this.state.totalPrice + INGREDIENT_PRICES[type];
+    this.setState({ ingredients: updatedIngredients, totalPrice: newPrice });
+  };
+
+  removeIngredientHandler = (type) => {
+    const oldCount = this.state.ingredients[type];
+    if (oldCount === 0) {
+      alert(`No ${type} layer is applied.`);
+      return;
+    }
+    const updatedCount = oldCount - 1;
+    const updatedIngredients = { ...this.state.ingredients };
+    updatedIngredients[type] = updatedCount;
+    const newPrice = this.state.totalPrice - INGREDIENT_PRICES[type];
+    this.setState({ ingredients: updatedIngredients, totalPrice: newPrice });
   };
 
   render() {
     return (
       <Aux>
         <Burger ingredients={this.state.ingredients} />
-        <BurgerControls />
+        <BurgerControls
+          addIngredient={this.addIngredientHandler}
+          removeIngredient={this.removeIngredientHandler}
+        />
       </Aux>
     );
   }
