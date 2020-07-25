@@ -10,15 +10,15 @@ class Layout extends Component {
   };
 
   toggleSideDrawer = () => {
-    const updatedSideDrawer = !this.state.showSideDrawer;
-    this.setState({ showSideDrawer: updatedSideDrawer });
+    this.setState((prevState) => {
+      return { showSideDrawer: !prevState.showSideDrawer };
+    });
   };
+  
   render() {
     return (
       <Aux>
-        <Toolbar
-          clicked={this.toggleSideDrawer}
-        />
+        <Toolbar clicked={this.toggleSideDrawer} />
         <SideDrawer
           toggle={this.toggleSideDrawer}
           show={this.state.showSideDrawer}
