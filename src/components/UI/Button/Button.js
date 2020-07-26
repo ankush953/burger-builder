@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./Button.module.css";
+import PropType from "prop-types";
 
 const button = (props) => {
   return (
@@ -11,5 +12,9 @@ const button = (props) => {
     </button>
   );
 };
+
+button.propType = {
+  clicked: PropType.func,
+}
 
 export default button;

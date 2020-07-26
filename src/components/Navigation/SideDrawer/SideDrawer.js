@@ -4,16 +4,17 @@ import Logo from "../../Logo/Logo";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import Backdrop from "../../UI/Backdrop/Backdrop";
 import Aux from "../../../hoc/Aux";
+import PropType from "prop-types";
 
 const sideDrawer = (props) => {
-  let attachedClasses = [classes.SideDrawer, classes.Close]
-  if(props.show){
+  let attachedClasses = [classes.SideDrawer, classes.Close];
+  if (props.show) {
     attachedClasses[1] = classes.Open;
   }
   return (
     <Aux>
-      <Backdrop show={props.show} clicked={props.toggle}/>
-      <div className={attachedClasses.join(' ')}>
+      <Backdrop show={props.show} clicked={props.toggle} />
+      <div className={attachedClasses.join(" ")}>
         <div className={classes.Logo}>
           <Logo />
         </div>
@@ -23,6 +24,11 @@ const sideDrawer = (props) => {
       </div>
     </Aux>
   );
+};
+
+sideDrawer.propType = {
+  show: PropType.bool,
+  toggle: PropType.func,
 };
 
 export default sideDrawer;
