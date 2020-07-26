@@ -1,13 +1,10 @@
 import React, { Component } from "react";
-import Aux from "../../../hoc/Aux";
+import Aux from "../../../hoc/Aux/Aux";
 import Button from "../../UI/Button/Button";
 import PropType from "prop-types";
 
 class OrderSummary extends Component {
-  // can be functional component. changed to class just for testing purpose.
-  componentDidUpdate(){
-    console.log('[orderSummary] did update');
-  }
+  // can be functional component. changed to class just for testing purpose
 
   render() {
     const ingredientSummary = Object.keys(this.props.ingredients).map((igKey) => {
