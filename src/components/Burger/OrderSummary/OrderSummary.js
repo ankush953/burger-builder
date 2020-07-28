@@ -24,7 +24,7 @@ class OrderSummary extends Component {
           Total Price: <strong>{this.props.totalPrice.toFixed(2)}</strong>
         </p>
         <p>Continue to checkout?</p>
-        <Button btnType={"Danger"} clicked={this.props.cancelPurchase}>
+        <Button btnType={"Danger"} clicked={this.props.ModalClosed}>
           CANCEL
         </Button>
         <Button btnType={"Success"} clicked={this.props.continuePurchase}>
@@ -38,7 +38,7 @@ class OrderSummary extends Component {
 OrderSummary.propType = {
   ingredients: PropType.object,
   totalPrice: PropType.number,
-  cancelPurchase: PropType.func,
+  ModalClosed: PropType.func,
   continuePurchase: PropType.func,
 };
 
