@@ -25,8 +25,7 @@ class BurgerBuilder extends Component {
     error: null,
   };
 
-  constructor(props) {
-    super(props);
+  componentDidMount() {
     axios
       .get("https://burger-builder-5ef56.firebaseio.com/ingredients.json")
       .then((response) => {
