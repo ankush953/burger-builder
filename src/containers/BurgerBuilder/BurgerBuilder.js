@@ -29,9 +29,28 @@ class BurgerBuilder extends Component {
     super(props);
     axios
       .get("https://burger-builder-5ef56.firebaseio.com/ingredients.json")
-      .then((response) => this.setState({ ingredients: response.data }))
+      .then((response) => {
+        this.setState({
+          ingredients: response.data,
+        });
+        this.calculatePriceHandler();
+      })
       .catch((error) => this.setState({ error: error }));
   }
+
+  calculatePriceHandler = () => {
+    const price = Object.keys(this.state.ingredients).reduce(
+      (price, ingredient) => {
+        return (
+          price +
+          INGREDIENT_PRICES[ingredient] * this.state.ingredients[ingredient]
+        );
+      },
+      4
+    );
+    this.setState({ totalPrice: price });
+  };
+
   updatePurchaseState = (ingredients) => {
     const sum = Object.keys(ingredients)
       .map((igKey) => {
