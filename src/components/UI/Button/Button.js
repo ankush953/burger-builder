@@ -5,7 +5,7 @@ import PropType from "prop-types";
 const button = (props) => {
   return (
     <button
-      className={[classes.Button, classes[props.btnType]].join(' ')}
+      className={[classes.Button, classes[props.btnType]].join(" ")}
       onClick={props.clicked}
     >
       {props.children}
@@ -15,6 +15,7 @@ const button = (props) => {
 
 button.propType = {
   clicked: PropType.func,
-}
+  btnType: PropType.string,
+};
 
 export default button;
