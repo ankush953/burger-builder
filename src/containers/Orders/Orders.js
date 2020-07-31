@@ -1,18 +1,32 @@
 import React, { Component } from "react";
 import Order from "../../components/Order/Order";
+import Spinner from "../../components/UI/Spinner/Spinner";
+import axios from "../../axios-orders";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
 class Orders extends Component {
   state = {
-    ingredients: {
-      salad: 1,
-      bacon: 1,
-      meat: 1,
-      cheese: 1,
-    },
+    orders: null,
+    loading: true,
   };
+
+  componentDidMount() {
+    axios
+      .get("/order.json")
+      .then((Response) => {
+        console.log(Response);
+        this.setState({ orders: Response.data, loading: false });
+      })
+      .catch((error) => console.log(error));
+  }
+
   render() {
-    return <Order ingredients={this.state.ingredients} price="45" />;
+    let orders = <Spinner />;
+    if (!this.state.loading) {
+      orders = <h1>Content Fetched.</h1>;
+    }
+    return <div>{orders}</div>;
   }
 }
 
-export default Orders;
+export default withErrorHandler(Orders, axios);
