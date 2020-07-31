@@ -6,7 +6,7 @@ import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
 class Orders extends Component {
   state = {
-    orders: null,
+    orders: [],
     loading: true,
   };
 
@@ -14,8 +14,11 @@ class Orders extends Component {
     axios
       .get("/order.json")
       .then((Response) => {
-        console.log(Response);
-        this.setState({ orders: Response.data, loading: false });
+        const fetchedOrders = [];
+        for (let key in Response.data) {
+          fetchedOrders.push({ ...Response.data[key], id: key });
+        }
+        this.setState({ orders: fetchedOrders, loading: false });
       })
       .catch((error) => console.log(error));
   }
@@ -23,7 +26,13 @@ class Orders extends Component {
   render() {
     let orders = <Spinner />;
     if (!this.state.loading) {
-      orders = <h1>Content Fetched.</h1>;
+      orders = this.state.orders.map((order) => (
+        <Order
+          key={order.id}
+          price={order.price}
+          ingredients={order.ingredients}
+        />
+      ));
     }
     return <div>{orders}</div>;
   }
