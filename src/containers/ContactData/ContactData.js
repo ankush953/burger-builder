@@ -146,9 +146,9 @@ class ContactData extends Component {
     updatedFormElement.touched = true;
     updatedOrderForm[inputIdentifier] = updatedFormElement;
     let updatedValidForm = true;
-    for (let key in this.state.orderForm) {
-      if (this.state.orderForm[key].validation) {
-        updatedValidForm &= this.state.orderForm[key].valid;
+    for (let key in updatedOrderForm) {
+      if (updatedOrderForm[key].validation) {
+        updatedValidForm &= updatedOrderForm[key].valid;
       }
     }
     this.setState({
