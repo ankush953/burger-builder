@@ -5,6 +5,7 @@ import classes from "./ContactData.module.css";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import { withRouter } from "react-router-dom";
 import Input from "../../components/UI/Input/Input";
+import input from "../../components/UI/Input/Input";
 
 class ContactData extends Component {
   state = {
@@ -92,22 +93,36 @@ class ContactData extends Component {
       });
   };
 
+  inputChangeHandler = (event, inputIdentifier) => {
+    console.log(event.target.value);
+    const updatedOrderForm = { ...this.state.orderForm };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier],
+    };
+    updatedFormElement.value = event.target.value;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+    this.setState({
+      orderForm: updatedOrderForm,
+    });
+  };
+
   render() {
-    const InputArray = [];
+    const formElementArray = [];
     for (let key in this.state.orderForm) {
-      InputArray.push({
+      formElementArray.push({
         id: key,
         config: this.state.orderForm[key],
       });
     }
     let form = (
       <form>
-        {InputArray.map((element) => (
+        {formElementArray.map((formElement) => (
           <Input
-            key={element.id}
-            elementType={element.config.elementType}
-            elementConfig={element.config.elementConfig}
-            value={element.config.value}
+            key={formElement.id}
+            elementType={formElement.config.elementType}
+            elementConfig={formElement.config.elementConfig}
+            value={formElement.config.value}
+            changed={(event) => this.inputChangeHandler(event, formElement.id)}
           />
         ))}
         <Button btnType="Success" clicked={this.orderPlacedHandler}>
