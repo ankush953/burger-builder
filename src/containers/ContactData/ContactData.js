@@ -5,7 +5,6 @@ import classes from "./ContactData.module.css";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import { withRouter } from "react-router-dom";
 import Input from "../../components/UI/Input/Input";
-import input from "../../components/UI/Input/Input";
 
 class ContactData extends Component {
   state = {
@@ -65,36 +64,29 @@ class ContactData extends Component {
 
   orderPlacedHandler = (event) => {
     event.preventDefault();
-    console.log(this.props);
+    const userData = {};
+    for (let key in this.state.orderForm) {
+      userData[key] = this.state.orderForm[key].value;
+    }
     this.setState({ loading: true });
     let data = {
       ingredients: this.props.ingredients,
       price: this.props.price,
-      customer: {
-        name: "ankush",
-        address: {
-          pin: "ABCDEF",
-          country: "India",
-        },
-        phone: "29834",
-      },
+      customer: userData,
     };
     axios
       .post("/order.json", data)
       .then((response) => {
         this.setState({ loading: false });
-        console.log(response);
+        alert("Order placed successfully.");
         this.props.history.push("/");
       })
       .catch((error) => {
         this.setState({ loading: false });
-        console.log(error);
-        this.props.history.push("/");
       });
   };
 
   inputChangeHandler = (event, inputIdentifier) => {
-    console.log(event.target.value);
     const updatedOrderForm = { ...this.state.orderForm };
     const updatedFormElement = {
       ...updatedOrderForm[inputIdentifier],

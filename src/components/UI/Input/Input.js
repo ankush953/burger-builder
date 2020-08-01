@@ -26,7 +26,6 @@ const input = (props) => {
       );
       break;
     case "select":
-      console.log(props.elementConfig);
       inputElement = (
         <select
           className={classes.InputElement}
