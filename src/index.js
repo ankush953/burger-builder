@@ -4,6 +4,11 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import ingredientReducer from "./store/reducers/ingredient";
+
+const store = createStore(ingredientReducer);
 
 const app = (
   <React.StrictMode>
@@ -12,7 +17,9 @@ const app = (
 );
 
 ReactDOM.render(
-  <BrowserRouter>{app}</BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>{app}</BrowserRouter>
+  </Provider>,
   document.getElementById("root")
 );
 
