@@ -8,6 +8,7 @@ import axios from "../../axios-orders";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
+import * as actionTypes from "../../store/actions";
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -98,6 +99,8 @@ class BurgerBuilder extends Component {
           <Burger ingredients={this.props.ingredients} />
           <BurgerControls
             price={this.props.totalPrice}
+            addIngredient={this.props.onAddIngredientHandler}
+            removeIngredient={this.props.onRemoveIngredientHandler}
             disabledInfo={disabledInfo}
             purchasable={this.state.purchasable}
             readyToPurchase={this.purchaseStateHandler}
@@ -136,6 +139,22 @@ const matchStateToProps = (state) => {
   return { ingredients: state.ingredients, totalPrice: state.totalPrice };
 };
 
+const matchDispatchToProps = (dispatch) => {
+  return {
+    onAddIngredientHandler: (ingredientName) =>
+      dispatch({
+        type: actionTypes.ADD_INGREDIENT,
+        ingredient: ingredientName,
+      }),
+    onRemoveIngredientHandler: (ingredientName) =>
+      dispatch({
+        type: actionTypes.REMOVE_INGREDIENT,
+        ingredient: ingredientName,
+      }),
+  };
+};
+
 export default connect(
-  matchStateToProps
+  matchStateToProps,
+  matchDispatchToProps
 )(withErrorHandler(BurgerBuilder, axios));
