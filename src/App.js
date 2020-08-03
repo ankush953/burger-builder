@@ -4,7 +4,6 @@ import Layout from "./hoc/Layout/Layout";
 import Checkout from "./containers/Checkout/Checkout";
 import { Route, Switch } from "react-router-dom";
 import Orders from "./containers/Orders/Orders";
-import Counter from "./containers/Counter/Counter";
 
 function App() {
   return (
@@ -13,8 +12,7 @@ function App() {
         <Switch>
           <Route path="/checkout" component={Checkout} />
           <Route path="/orders" component={Orders} />
-          <Route path="/" component={Counter} />
-          {/* <Route path="/" component={BurgerBuilder} /> */}
+          <Route path="/" component={BurgerBuilder} />
         </Switch>
       </Layout>
     </div>

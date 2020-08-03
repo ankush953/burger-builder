@@ -12,9 +12,7 @@ const app = (
 );
 
 ReactDOM.render(
-  <BrowserRouter>
-    <app />
-  </BrowserRouter>,
+  <BrowserRouter>{app}</BrowserRouter>,
   document.getElementById("root")
 );
 
