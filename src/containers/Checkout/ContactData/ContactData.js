@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import Button from "../../components/UI/Button/Button";
-import axios from "../../axios-orders";
+import Button from "../../../components/UI/Button/Button";
+import axios from "../../../axios-orders";
 import classes from "./ContactData.module.css";
-import Spinner from "../../components/UI/Spinner/Spinner";
-import { withRouter } from "react-router-dom";
-import Input from "../../components/UI/Input/Input";
+import Spinner from "../../../components/UI/Spinner/Spinner";
+import Input from "../../../components/UI/Input/Input";
 import { connect } from "react-redux";
 
 class ContactData extends Component {

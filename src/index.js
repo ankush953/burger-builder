@@ -6,9 +6,9 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import ingredientReducer from "./store/reducers/ingredient";
+import burgerBuilderReducer from "./store/reducers/burgerBuilder";
 
-const store = createStore(ingredientReducer);
+const store = createStore(burgerBuilderReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 const app = (
   <React.StrictMode>
