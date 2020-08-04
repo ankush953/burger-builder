@@ -5,6 +5,7 @@ import classes from "./ContactData.module.css";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import { withRouter } from "react-router-dom";
 import Input from "../../components/UI/Input/Input";
+import { connect } from "react-redux";
 
 class ContactData extends Component {
   state = {
@@ -102,17 +103,17 @@ class ContactData extends Component {
     this.setState({ loading: true });
     let data = {
       ingredients: this.props.ingredients,
-      price: this.props.price,
+      price: this.props.totalPrice,
       customer: userData,
     };
     axios
       .post("/order.json", data)
-      .then((response) => {
+      .then(() => {
         this.setState({ loading: false });
         alert("Order placed successfully.");
         this.props.history.push("/");
       })
-      .catch((error) => {
+      .catch(() => {
         this.setState({ loading: false });
       });
   };
@@ -195,4 +196,8 @@ class ContactData extends Component {
   }
 }
 
-export default withRouter(ContactData);
+const matchStateToProps = (state) => {
+  return { ingredients: state.ingredients, totalPrice: state.totalPrice };
+};
+
+export default connect(matchStateToProps)(ContactData);
