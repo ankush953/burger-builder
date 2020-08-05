@@ -18,13 +18,8 @@ class BurgerBuilder extends Component {
   };
 
   componentDidMount() {
-    // axios
-    //   .get("https://burger-builder-5ef56.firebaseio.com/ingredients.json")
-    //   .then((response) => {
-    //     this.props.ingredients = response.data;
-    //     this.calculatePriceHandler();
-    //   })
-    //   .catch((error) => this.setState({ error: error }));
+    console.log('[BurgerBuilder]');
+    this.props.onInitIngredientHandler();
   }
 
   updatePurchaseState = (ingredients) => {
@@ -114,6 +109,8 @@ const matchDispatchToProps = (dispatch) => {
       dispatch(burgerBuilderActions.addIngredient(ingredientName)),
     onRemoveIngredientHandler: (ingredientName) =>
       dispatch(burgerBuilderActions.removeIngredient(ingredientName)),
+    onInitIngredientHandler: () =>
+      dispatch(burgerBuilderActions.initIngredients()),
   };
 };
 
