@@ -14,7 +14,6 @@ class BurgerBuilder extends Component {
   state = {
     readyToPurchase: false,
     loading: false,
-    error: null,
   };
 
   componentDidMount() {
@@ -101,9 +100,9 @@ class BurgerBuilder extends Component {
 
 const matchStateToProps = (state) => {
   return {
-    ingredients: state.ingredients,
-    totalPrice: state.totalPrice,
-    error: state.error,
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice,
+    error: state.burgerBuilder.error,
   };
 };
 

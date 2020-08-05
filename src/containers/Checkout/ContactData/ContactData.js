@@ -5,6 +5,8 @@ import classes from "./ContactData.module.css";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
 import { connect } from "react-redux";
+import * as orderActions from "../../../store/actions/index";
+import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 
 class ContactData extends Component {
   state = {
@@ -86,10 +88,9 @@ class ContactData extends Component {
         },
         valid: true,
         touched: false,
-        value: 'fastest',
+        value: "fastest",
       },
     },
-    loading: false,
     validForm: false,
   };
 
@@ -100,21 +101,12 @@ class ContactData extends Component {
       userData[key] = this.state.orderForm[key].value;
     }
     this.setState({ loading: true });
-    let data = {
+    let orderData = {
       ingredients: this.props.ingredients,
       price: this.props.totalPrice,
       customer: userData,
     };
-    axios
-      .post("/order.json", data)
-      .then(() => {
-        this.setState({ loading: false });
-        alert("Order placed successfully.");
-        this.props.history.push("/");
-      })
-      .catch(() => {
-        this.setState({ loading: false });
-      });
+    this.props.onPurchaseStartHandler(orderData);
   };
 
   checkValidity = (value, formElement) => {
@@ -188,7 +180,7 @@ class ContactData extends Component {
         </Button>
       </form>
     );
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner />;
     }
     return <div className={classes.ContactData}>{form}</div>;
@@ -196,7 +188,21 @@ class ContactData extends Component {
 }
 
 const matchStateToProps = (state) => {
-  return { ingredients: state.ingredients, totalPrice: state.totalPrice };
+  return {
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice,
+    loading: state.order.loading,
+  };
 };
 
-export default connect(matchStateToProps)(ContactData);
+const matchDispatchToProps = (dispatch) => {
+  return {
+    onPurchaseStartHandler: (orderData) =>
+      dispatch(orderActions.purchaseBurgerStart(orderData)),
+  };
+};
+
+export default connect(
+  matchStateToProps,
+  matchDispatchToProps
+)(withErrorHandler(ContactData, axios));
