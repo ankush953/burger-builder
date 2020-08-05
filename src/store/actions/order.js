@@ -30,10 +30,15 @@ export const purchaseBurgerStart = (orderData) => {
       .then((response) => {
         dispatch(purchaseBurgerSuccess(response.data.name, orderData));
         alert("Order placed successfully.");
-        this.props.history.push("/");
       })
       .catch((error) => {
         dispatch(purchaseBurgerFailed(error));
       });
+  };
+};
+
+export const initPurchase = () => {
+  return {
+    type: actionTypes.PURCHASE_INIT,
   };
 };

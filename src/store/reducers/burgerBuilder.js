@@ -44,6 +44,7 @@ const ingredientReducer = (state = initialState, action) => {
           meat: action.ingredients.meat,
         },
         error: null,
+        totalPrice: 4,
       };
     case actionTypes.INIT_INGREDIENT_FAILED:
       return {

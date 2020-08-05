@@ -4,6 +4,7 @@ const initialState = {
   order: [],
   loading: false,
   error: null,
+  purchased: false,
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -17,6 +18,7 @@ const orderReducer = (state = initialState, action) => {
         }),
         error: null,
         loading: false,
+        purchased: true,
       };
     case actionTypes.PURCHASE_BURGER_FAILED:
       return {
@@ -29,6 +31,11 @@ const orderReducer = (state = initialState, action) => {
         ...state,
         error: null,
         loading: true,
+      };
+    case actionTypes.PURCHASE_INIT:
+      return {
+        ...state,
+        purchased: false,
       };
     default:
       return {

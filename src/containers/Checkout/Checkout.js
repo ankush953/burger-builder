@@ -18,6 +18,7 @@ class Checkout extends Component {
     if (this.props.ingredients) {
       summary = (
         <div>
+          {this.props.purchased ? <Redirect to="/" /> : null}
           <CheckoutSummary
             ingredients={this.props.ingredients}
             cancelCheckout={this.cancelCheckoutHandler}
@@ -36,7 +37,11 @@ class Checkout extends Component {
 }
 
 const matchStateToProps = (state) => {
-  return { ingredients: state.burgerBuilder.ingredients, totalPrice: state.burgerBuilder.totalPrice };
+  return {
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice,
+    purchased: state.order.purchased,
+  };
 };
 
 export default connect(matchStateToProps)(Checkout);

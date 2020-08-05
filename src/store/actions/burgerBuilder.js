@@ -16,7 +16,6 @@ export const removeIngredient = (ingredientName) => {
 };
 
 const fetchIngredients = (ingredients) => {
-  console.log("[BurgerBuilder actions] fetchIngredients");
   return {
     type: actionTypes.INIT_INGREDIENT,
     ingredients: ingredients,
@@ -24,7 +23,6 @@ const fetchIngredients = (ingredients) => {
 };
 
 const fetchIngredientsFailed = (error) => {
-  console.log("[BurgerBuilder actions] fetchIngredientsFailed");
   return {
     type: actionTypes.INIT_INGREDIENT_FAILED,
     error: error,
@@ -32,7 +30,6 @@ const fetchIngredientsFailed = (error) => {
 };
 
 export const initIngredients = () => {
-  console.log("[BurgerBuilder actions]");
   return (dispatch) => {
     axios
       .get("https://burger-builder-5ef56.firebaseio.com/ingredients.json")
