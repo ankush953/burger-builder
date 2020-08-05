@@ -18,7 +18,7 @@ class BurgerBuilder extends Component {
   };
 
   componentDidMount() {
-    console.log('[BurgerBuilder]');
+    console.log("[BurgerBuilder]");
     this.props.onInitIngredientHandler();
   }
 
@@ -52,8 +52,8 @@ class BurgerBuilder extends Component {
     }
 
     let orderSummary = null;
-    let burger = this.state.error ? (
-      <p>{this.state.error.message}</p>
+    let burger = this.props.error ? (
+      <p>{this.props.error.message}</p>
     ) : (
       <Spinner />
     );
@@ -100,7 +100,11 @@ class BurgerBuilder extends Component {
 }
 
 const matchStateToProps = (state) => {
-  return { ingredients: state.ingredients, totalPrice: state.totalPrice };
+  return {
+    ingredients: state.ingredients,
+    totalPrice: state.totalPrice,
+    error: state.error,
+  };
 };
 
 const matchDispatchToProps = (dispatch) => {

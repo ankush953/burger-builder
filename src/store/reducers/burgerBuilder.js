@@ -10,6 +10,7 @@ const INGREDIENT_PRICES = {
 const initialState = {
   ingredients: null,
   totalPrice: 4,
+  error: null,
 };
 
 const ingredientReducer = (state = initialState, action) => {
@@ -37,6 +38,12 @@ const ingredientReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredients: action.ingredients,
+        error: null,
+      };
+    case actionTypes.INIT_INGREDIENT_FAILED:
+      return {
+        ...state,
+        error: action.error,
       };
     default:
       return state;
