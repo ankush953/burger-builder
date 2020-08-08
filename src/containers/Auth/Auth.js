@@ -5,6 +5,8 @@ import classes from "./Auth.module.css";
 import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import Axios from "axios";
 
 class Auth extends Component {
   state = {
@@ -38,6 +40,7 @@ class Auth extends Component {
       },
     },
     validForm: false,
+    isSignup: true,
   };
 
   checkValidity = (value, formElement) => {
@@ -82,7 +85,16 @@ class Auth extends Component {
 
   authenticationHandler = (event) => {
     event.preventDefault();
-    this.props.onAuthHandler(this.state.controls.email.value, this.state.controls.password.value);
+    this.props.onAuthHandler(
+      this.state.controls.email.value,
+      this.state.controls.password.value
+    );
+  };
+
+  switchAuthModeHandler = () => {
+    this.setState((prevState) => {
+      return { isSignup: !prevState.isSignup };
+    });
   };
 
   render() {
@@ -110,30 +122,44 @@ class Auth extends Component {
               }
             />
           ))}
-          <Button
-            btnType="Success"
-            disabled={!this.state.validForm}
-            clicked={this.authenticationHandler}
-          >
-            SUBMIT
-          </Button>
         </form>
       );
     }
-    return <div className={classes.Auth}>{form}</div>;
+    let errorMessage = null;
+    if(this.props.error){
+      errorMessage = <p>this.props.error.message</p>;
+    }
+    return (
+      <div className={classes.Auth}>
+        {errorMessage}
+        {form}
+        <Button
+          btnType="Success"
+          disabled={!this.state.validForm}
+          clicked={this.authenticationHandler}
+        >
+          SUBMIT
+        </Button>
+        <Button btnType="Danger" clicked={this.switchAuthModeHandler}>
+          SWITCH TO {this.state.isSignup ? "SIGNIN" : "SIGNUP"}
+        </Button>
+      </div>
+    );
   }
 }
 
 const matchStateToProps = (state) => {
   return {
     loading: state.auth.loading,
+    error: state.auth.error,
   };
 };
 
 const matchDispatchToProps = (dispatch) => {
   return {
-    onAuthHandler: (email, password) => dispatch(actions.auth(email, password)),
+    onAuthHandler: (email, password, isSignup) =>
+      dispatch(actions.auth(email, password, isSignup)),
   };
 };
 
-export default connect(matchStateToProps, matchDispatchToProps)(Auth);
+export default connect(matchStateToProps, matchDispatchToProps)(withErrorHandler(Auth, Axios));

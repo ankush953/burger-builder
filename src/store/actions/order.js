@@ -57,8 +57,15 @@ const fetchOrdersFailed = (error) => {
   };
 };
 
+const fetchOrdersStart = () => {
+  return {
+    type: actionTypes.FETCH_ORDERS_START,
+  };
+};
+
 export const fetchOrders = () => {
   return (dispatch) => {
+    dispatch(fetchOrdersStart());
     axios
       .get("/order.json")
       .then((response) => {

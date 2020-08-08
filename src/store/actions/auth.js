@@ -1,4 +1,5 @@
 import * as actionTypes from "./actionTypes";
+import Axios from "axios";
 
 export const authFailed = (error) => {
   return {
@@ -7,9 +8,11 @@ export const authFailed = (error) => {
   };
 };
 
-export const authSuccess = () => {
+export const authSuccess = (idToken, userId) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
+    idToken: idToken,
+    userId: userId,
   };
 };
 
@@ -19,9 +22,20 @@ export const authStart = () => {
   };
 };
 
-export const auth = (email, password) => {
+export const auth = (email, password, isSignup) => {
   return (dispatch) => {
     dispatch(authStart());
-    setTimeout((email, password) => dispatch(authSuccess()), 2000);
+    const authData = {
+      email: email,
+      password: password,
+      returnSecurityToken: true,
+    };
+    const url = "";
+    if(isSignup){
+      url = "";
+    }
+    Axios.post(url, authData)
+      .then((response) => dispatch(authSuccess(response.data.idToken, response.data.localId)))
+      .catch((error) => dispatch(authFailed(error.response.data.error)));
   };
 };
