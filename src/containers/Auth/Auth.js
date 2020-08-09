@@ -87,7 +87,8 @@ class Auth extends Component {
     event.preventDefault();
     this.props.onAuthHandler(
       this.state.controls.email.value,
-      this.state.controls.password.value
+      this.state.controls.password.value,
+      this.state.isSignup,
     );
   };
 
