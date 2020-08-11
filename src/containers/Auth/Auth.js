@@ -5,8 +5,6 @@ import classes from "./Auth.module.css";
 import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
-import Axios from "axios";
 
 class Auth extends Component {
   state = {
@@ -32,7 +30,7 @@ class Auth extends Component {
         },
         validation: {
           required: true,
-          minLength: 6,
+          // minLength: 6,
         },
         value: "",
         valid: false,
@@ -128,7 +126,7 @@ class Auth extends Component {
     }
     let errorMessage = null;
     if(this.props.error){
-      errorMessage = <p>this.props.error.message</p>;
+      errorMessage = <p>{this.props.error.message}</p>;
     }
     return (
       <div className={classes.Auth}>
@@ -163,4 +161,4 @@ const matchDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(matchStateToProps, matchDispatchToProps)(withErrorHandler(Auth, Axios));
+export default connect(matchStateToProps, matchDispatchToProps)(Auth);
