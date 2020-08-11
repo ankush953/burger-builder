@@ -106,7 +106,7 @@ class ContactData extends Component {
       price: this.props.totalPrice,
       customer: userData,
     };
-    this.props.onPurchaseStartHandler(orderData);
+    this.props.onPurchaseStartHandler(orderData, this.props.idToken);
   };
 
   checkValidity = (value, formElement) => {
@@ -192,13 +192,14 @@ const matchStateToProps = (state) => {
     ingredients: state.burgerBuilder.ingredients,
     totalPrice: state.burgerBuilder.totalPrice,
     loading: state.order.loading,
+    idToken: state.auth.token,
   };
 };
 
 const matchDispatchToProps = (dispatch) => {
   return {
-    onPurchaseStartHandler: (orderData) =>
-      dispatch(orderActions.purchaseBurgerStart(orderData)),
+    onPurchaseStartHandler: (orderData, idToken) =>
+      dispatch(orderActions.purchaseBurgerStart(orderData, idToken)),
   };
 };
 
