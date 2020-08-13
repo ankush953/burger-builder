@@ -28,9 +28,13 @@ const ordersReducer = (state = initialState, action) => {
     case actionTypes.PURCHASE_INIT:
       return updateObject(state, { purchased: false });
     case actionTypes.FETCH_ORDERS_FAILED:
-      return updateObject(state, { error: action.error, loading: false });
+      return updateObject(state, {
+        orders: [],
+        error: action.error,
+        loading: false,
+      });
     case actionTypes.FETCH_ORDERS_START:
-      return updateObject(state, { loading: true });
+      return updateObject(state, { orders: [], loading: true });
     case actionTypes.FETCH_ORDERS_SUCCESSFUL:
       return updateObject(state, { orders: action.orders, loading: false });
     default:

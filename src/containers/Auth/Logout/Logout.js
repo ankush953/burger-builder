@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import * as actions from "../../../store/actions/index";
 import { connect } from "react-redux";
+import { Redirect } from "react-router";
 
 class Logout extends Component {
   componentDidMount() {
@@ -8,12 +9,16 @@ class Logout extends Component {
   }
 
   render() {
-    return <div></div>;
+    return (
+      <div>
+        <Redirect to="/auth" />
+      </div>
+    );
   }
 }
 
 const mathDispatchToProps = (dispatch) => {
-  return {onLogoutHandler: () => dispatch(actions.authLogout());}
+  return { onLogoutHandler: () => dispatch(actions.authLogout()) };
 };
 
 export default connect(null, mathDispatchToProps)(Logout);
