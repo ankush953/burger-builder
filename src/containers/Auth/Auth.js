@@ -5,6 +5,7 @@ import classes from "./Auth.module.css";
 import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import { Redirect } from "react-router";
 
 class Auth extends Component {
   state = {
@@ -86,7 +87,7 @@ class Auth extends Component {
     this.props.onAuthHandler(
       this.state.controls.email.value,
       this.state.controls.password.value,
-      this.state.isSignup,
+      this.state.isSignup
     );
   };
 
@@ -125,11 +126,12 @@ class Auth extends Component {
       );
     }
     let errorMessage = null;
-    if(this.props.error){
+    if (this.props.error) {
       errorMessage = <p>{this.props.error.message}</p>;
     }
     return (
       <div className={classes.Auth}>
+        {this.props.isAuth ? <Redirect to="/" /> : null}
         {errorMessage}
         {form}
         <Button
@@ -151,6 +153,7 @@ const matchStateToProps = (state) => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
+    isAuth: state.auth.token !== null,
   };
 };
 
