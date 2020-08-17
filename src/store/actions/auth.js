@@ -57,9 +57,16 @@ export const auth = (email, password, isSignup) => {
         dispatch(authSuccess(response.data.idToken, response.data.localId));
         dispatch(checkAuthTime(response.data.expiresIn));
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         dispatch(authFailed(error));
       });
+  };
+};
+
+export const setAuthRedirectPath = (path) => {
+  return {
+    type: actionTypes.SET_AUTH_REDIRECT_PATH,
+    path: path,
   };
 };
