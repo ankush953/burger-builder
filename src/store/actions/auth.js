@@ -85,12 +85,6 @@ export const autoLogin = () => {
       return dispatch(authLogout());
     } else {
       const expirationDate = new Date(localStorage.getItem("expirationDate"));
-      console.log(expirationDate, new Date());
-      console.log(expirationDate.getTime());
-      console.log(new Date().getTime());
-      console.log(expirationDate.getSeconds());
-      console.log(new Date().getSeconds());
-
       if (expirationDate.getTime() > new Date().getTime()) {
         dispatch(authSuccess(idToken, localStorage.getItem("userId")));
         dispatch(
