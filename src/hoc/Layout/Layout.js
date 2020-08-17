@@ -21,6 +21,7 @@ class Layout extends Component {
       <Aux>
         <Toolbar isAuth={this.props.isAuth} clicked={this.toggleSideDrawer} />
         <SideDrawer
+          isAuth={this.props.isAuth}
           toggle={this.toggleSideDrawer}
           show={this.state.showSideDrawer}
         />
@@ -32,7 +33,7 @@ class Layout extends Component {
 
 const matchStateToProps = (state) => {
   return {
-    isAuth: state.auth.token != null,
+    isAuth: state.auth.token !== null,
   };
 };
 
