@@ -6,6 +6,7 @@ import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import { Redirect } from "react-router";
+import { updateObject } from "../../shared/utility";
 
 class Auth extends Component {
   state = {
@@ -48,34 +49,37 @@ class Auth extends Component {
     }
   }
 
-  checkValidity = (value, formElement) => {
+  checkValidity = (value, validation) => {
     let isValid = true;
-    if (formElement.validation) {
-      if (formElement.validation.required) {
+    if (validation) {
+      if (validation.required) {
         isValid &= value.trim() !== "";
       }
-      if (formElement.validation.minLength) {
-        isValid &= value.trim().length >= formElement.validation.minLength;
+      if (validation.minLength) {
+        isValid &= value.trim().length >= validation.minLength;
       }
-      if (formElement.validation.maxLength) {
-        isValid &= value.trim().length <= formElement.validation.maxLength;
+      if (validation.maxLength) {
+        isValid &= value.trim().length <= validation.maxLength;
       }
     }
     return isValid;
   };
 
   inputChangeHandler = (event, inputIdentifier) => {
-    const updatedControls = { ...this.state.controls };
-    const updatedValue = event.target.value;
-    const updatedFormElement = updatedControls[inputIdentifier];
-    updatedFormElement.value = updatedValue;
-    const elementIsValid = this.checkValidity(
-      updatedFormElement.value,
-      updatedFormElement
+    const updatedFormElement = updateObject(
+      this.state.controls[inputIdentifier],
+      {
+        value: event.target.value,
+        valid: this.checkValidity(
+          event.target.value,
+          this.state.controls[inputIdentifier].validation
+        ),
+        touched: true,
+      }
     );
-    updatedFormElement.valid = elementIsValid;
-    updatedFormElement.touched = true;
-    updatedControls[inputIdentifier] = updatedFormElement;
+    const updatedControls = updateObject(this.state.controls, {
+      [inputIdentifier]: updatedFormElement,
+    });
     let updatedValidForm = true;
     for (let key in updatedControls) {
       if (updatedControls[key].validation) {
