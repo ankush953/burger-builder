@@ -7,7 +7,7 @@ import Input from "../../../components/UI/Input/Input";
 import { connect } from "react-redux";
 import * as orderActions from "../../../store/actions/index";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
-import { updateObject } from "../../../shared/utility";
+import { updateObject, checkValidity } from "../../../shared/utility";
 
 class ContactData extends Component {
   state = {
@@ -111,29 +111,13 @@ class ContactData extends Component {
     this.props.onPurchaseStartHandler(orderData, this.props.idToken);
   };
 
-  checkValidity = (value, validation) => {
-    let isValid = true;
-    if (validation) {
-      if (validation.required) {
-        isValid &= value.trim() !== "";
-      }
-      if (validation.minLength) {
-        isValid &= value.trim().length >= validation.minLength;
-      }
-      if (validation.maxLength) {
-        isValid &= value.trim().length <= validation.maxLength;
-      }
-    }
-    return isValid;
-  };
-
   inputChangeHandler = (event, inputIdentifier) => {
     const updatedFormElement = updateObject(
       this.state.orderForm[inputIdentifier],
       {
         value: event.target.value,
         touched: true,
-        valid: this.checkValidity(
+        valid: checkValidity(
           event.target.value,
           this.state.orderForm[inputIdentifier].validation
         ),
